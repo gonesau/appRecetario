@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF7043</color> <!-- Naranja suave -->
+    <color name="colorPrimaryDark">#E64A19</color>
+    <color name="colorAccent">#FFD180</color> <!-- Crema -->
+    <color name="colorBackground">#FFF8F0</color> <!-- Fondo claro -->
+    <color name="colorTextPrimary">#333333</color>
+    <color name="colorTextSecondary">#666666</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorHintText">#757575</color>
+</resources>
