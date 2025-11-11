@@ -2,7 +2,7 @@ package com.example.recetario;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri; // Importar Uri
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +18,16 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
 
     private final Context context;
     private final List<Receta> listaRecetas;
+    private final OnFavoritoClickListener favoritoListener;
 
-    public RecetaAdapter(Context context, List<Receta> listaRecetas) {
+    public interface OnFavoritoClickListener {
+        void onFavoritoClick(Receta receta, int position);
+    }
+
+    public RecetaAdapter(Context context, List<Receta> listaRecetas, OnFavoritoClickListener listener) {
         this.context = context;
         this.listaRecetas = listaRecetas;
+        this.favoritoListener = listener;
     }
 
     @NonNull
@@ -36,31 +42,36 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
         Receta receta = listaRecetas.get(position);
 
         holder.tvTitulo.setText(receta.getNombre());
-        // Mostramos el código como descripción
         holder.tvDesc.setText("Código: " + receta.getCodigo());
 
-
-        // --- CAMBIO MEJORA: Cargar imagen desde URI ---
-        String imgPath = receta.getImagen(); // Esto es la URI como String
-
+        // Cargar imagen
+        String imgPath = receta.getImagen();
         try {
             if (imgPath != null && !imgPath.isEmpty()) {
                 Uri imgUri = Uri.parse(imgPath);
-                // Cargar imagen desde la URI
                 holder.imgReceta.setImageURI(imgUri);
             } else {
-                // Si no hay imagen, poner una por defecto
-                holder.imgReceta.setImageResource(R.mipmap.ic_launcher);
+                holder.imgReceta.setImageResource(R.drawable.receta1);
             }
         } catch (Exception e) {
-            // Si la URI es inválida o el archivo fue borrado, poner imagen por defecto
-            e.printStackTrace();
-            holder.imgReceta.setImageResource(R.mipmap.ic_launcher);
+            holder.imgReceta.setImageResource(R.drawable.receta1);
         }
-        // --- Fin del cambio ---
 
+        // Configurar icono de favorito
+        if (receta.esFavorito()) {
+            holder.imgFavorito.setImageResource(R.drawable.ic_favorite_filled);
+        } else {
+            holder.imgFavorito.setImageResource(R.drawable.ic_favorite_border);
+        }
 
-        // --- Click Listener para ir al Detalle ---
+        // Click en favorito
+        holder.imgFavorito.setOnClickListener(v -> {
+            if (favoritoListener != null) {
+                favoritoListener.onFavoritoClick(receta, holder.getAdapterPosition());
+            }
+        });
+
+        // Click en el item completo
         holder.itemView.setOnClickListener(v -> {
             Intent i = new Intent(context, activity_detalle.class);
             i.putExtra("RECETA_OBJ", receta);
@@ -73,14 +84,14 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.RecetaView
         return listaRecetas.size();
     }
 
-    // ViewHolder
     static class RecetaViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgReceta;
+        ImageView imgReceta, imgFavorito;
         TextView tvTitulo, tvDesc;
 
         public RecetaViewHolder(@NonNull View itemView) {
             super(itemView);
             imgReceta = itemView.findViewById(R.id.imgRecetaItem);
+            imgFavorito = itemView.findViewById(R.id.imgFavorito);
             tvTitulo = itemView.findViewById(R.id.tvTituloItem);
             tvDesc = itemView.findViewById(R.id.tvDescItem);
         }

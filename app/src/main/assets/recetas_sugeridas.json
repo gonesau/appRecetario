@@ -1,0 +1,206 @@
+[
+  {
+    "codigo": "RSIA001",
+    "nombre": "Pupusas de Queso y Loroco",
+    "ingredientes": [
+      "2 tazas de harina de maíz",
+      "1½ tazas de agua tibia",
+      "1 taza de queso rallado",
+      "½ taza de loroco picado",
+      "Sal al gusto",
+      "Aceite para cocinar"
+    ],
+    "proceso": [
+      "Mezcla la harina de maíz con agua tibia y sal hasta formar una masa suave",
+      "Divide la masa en bolas del tamaño de una pelota de golf",
+      "Aplana cada bola, coloca queso y loroco en el centro",
+      "Sella los bordes y aplana nuevamente formando un disco",
+      "Cocina en un comal caliente con un poco de aceite hasta dorar por ambos lados",
+      "Sirve caliente con curtido y salsa de tomate"
+    ]
+  },
+  {
+    "codigo": "RSIA002",
+    "nombre": "Casamiento Salvadoreño",
+    "ingredientes": [
+      "2 tazas de arroz cocido",
+      "1 taza de frijoles negros cocidos",
+      "½ cebolla picada",
+      "2 dientes de ajo",
+      "1 tomate picado",
+      "Aceite",
+      "Sal y pimienta"
+    ],
+    "proceso": [
+      "Sofríe la cebolla y el ajo en aceite hasta que estén dorados",
+      "Agrega el tomate y cocina por 3 minutos",
+      "Incorpora los frijoles cocidos con un poco de su caldo",
+      "Añade el arroz cocido y mezcla bien",
+      "Sazona con sal y pimienta al gusto",
+      "Cocina a fuego bajo por 5 minutos más y sirve caliente"
+    ]
+  },
+  {
+    "codigo": "RSIA003",
+    "nombre": "Huevos con Crema",
+    "ingredientes": [
+      "4 huevos",
+      "½ taza de crema",
+      "1 tomate picado",
+      "½ cebolla picada",
+      "Sal al gusto",
+      "Tortillas"
+    ],
+    "proceso": [
+      "Sofríe la cebolla hasta que esté transparente",
+      "Agrega el tomate picado y cocina por 2 minutos",
+      "Bate los huevos y viértelos en la sartén",
+      "Revuelve constantemente hasta que los huevos estén casi listos",
+      "Añade la crema y mezcla hasta incorporar completamente",
+      "Sirve caliente acompañado de tortillas"
+    ]
+  },
+  {
+    "codigo": "RSIA004",
+    "nombre": "Plátanos Fritos con Crema",
+    "ingredientes": [
+      "3 plátanos maduros",
+      "Aceite para freír",
+      "½ taza de crema",
+      "½ taza de frijoles refritos",
+      "Queso rallado opcional"
+    ],
+    "proceso": [
+      "Pela los plátanos y córtalos en rodajas diagonales",
+      "Calienta suficiente aceite en una sartén",
+      "Fríe las rodajas de plátano hasta que estén doradas por ambos lados",
+      "Escurre en papel absorbente",
+      "Sirve caliente con crema, frijoles refritos y queso rallado"
+    ]
+  },
+  {
+    "codigo": "RSIA005",
+    "nombre": "Sopa de Pollo Salvadoreña",
+    "ingredientes": [
+      "½ kg de pollo en piezas",
+      "2 papas grandes",
+      "2 zanahorias",
+      "1 chile verde",
+      "1 tomate",
+      "Cilantro",
+      "Cebolla",
+      "Ajo",
+      "Sal"
+    ],
+    "proceso": [
+      "Hierve el pollo con sal, cebolla y ajo hasta que esté cocido",
+      "Retira el pollo y desmenuza",
+      "En el caldo, agrega las papas y zanahorias en cubos",
+      "Añade el tomate y chile verde picados",
+      "Cocina hasta que las verduras estén suaves",
+      "Regresa el pollo desmenu, agrega cilantro y sirve caliente"
+    ]
+  },
+  {
+    "codigo": "RSIA006",
+    "nombre": "Frijoles Refritos",
+    "ingredientes": [
+      "2 tazas de frijoles cocidos",
+      "½ cebolla picada",
+      "2 dientes de ajo",
+      "Aceite",
+      "Sal"
+    ],
+    "proceso": [
+      "Calienta aceite en una sartén",
+      "Sofríe la cebolla y el ajo hasta dorar",
+      "Agrega los frijoles con un poco de su caldo",
+      "Machaca los frijoles con un tenedor mientras se cocinan",
+      "Cocina hasta obtener la consistencia deseada",
+      "Sirve caliente como acompañamiento"
+    ]
+  },
+  {
+    "codigo": "RSIA007",
+    "nombre": "Arroz con Pollo",
+    "ingredientes": [
+      "2 tazas de arroz",
+      "½ kg de pollo",
+      "1 tomate",
+      "1 cebolla",
+      "Ajo",
+      "Zanahoria",
+      "Chile verde",
+      "Caldo de pollo",
+      "Aceite"
+    ],
+    "proceso": [
+      "Sofríe el pollo en aceite hasta dorar, retira y reserva",
+      "En el mismo aceite, sofríe cebolla, ajo y tomate",
+      "Agrega el arroz y mezcla bien",
+      "Incorpora el caldo de pollo caliente",
+      "Añade el pollo, zanahoria y chile verde",
+      "Tapa y cocina a fuego bajo hasta que el arroz esté listo"
+    ]
+  },
+  {
+    "codigo": "RSIA008",
+    "nombre": "Empanadas de Plátano",
+    "ingredientes": [
+      "3 plátanos maduros",
+      "½ taza de leche",
+      "2 cucharadas de azúcar",
+      "1 taza de frijoles refritos dulces",
+      "Aceite para freír"
+    ],
+    "proceso": [
+      "Hierve los plátanos con cáscara hasta que estén suaves",
+      "Pela y machaca los plátanos",
+      "Mezcla con leche y azúcar hasta formar una masa",
+      "Forma tortillas, coloca frijol en el centro y dobla",
+      "Sella los bordes presionando con un tenedor",
+      "Fríe en aceite caliente hasta dorar"
+    ]
+  },
+  {
+    "codigo": "RSIA009",
+    "nombre": "Carne Guisada con Papa",
+    "ingredientes": [
+      "½ kg de carne de res en cubos",
+      "3 papas grandes",
+      "2 tomates",
+      "1 cebolla",
+      "Ajo",
+      "Chile verde",
+      "Sal y pimienta"
+    ],
+    "proceso": [
+      "Dora la carne en aceite caliente",
+      "Agrega cebolla, ajo, tomate y chile verde picados",
+      "Cocina hasta que el tomate se deshaga",
+      "Añade agua suficiente para cubrir la carne",
+      "Incorpora las papas en cubos grandes",
+      "Cocina hasta que la carne y papas estén suaves, sazona y sirve"
+    ]
+  },
+  {
+    "codigo": "RSIA010",
+    "nombre": "Quesadilla Salvadoreña (Postre)",
+    "ingredientes": [
+      "2 tazas de queso rallado",
+      "½ taza de crema",
+      "½ taza de azúcar",
+      "3 huevos",
+      "1 taza de harina",
+      "Mantequilla"
+    ],
+    "proceso": [
+      "Bate los huevos con el azúcar hasta esponjar",
+      "Agrega el queso rallado y la crema",
+      "Incorpora la harina poco a poco",
+      "Vierte la mezcla en un molde engrasado",
+      "Hornea a 180°C por 30-40 minutos",
+      "Deja enfriar antes de servir"
+    ]
+  }
+]

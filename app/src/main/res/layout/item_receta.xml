@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/CardStyle"
+    android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
+        <!-- Imagen de la receta -->
         <ImageView
             android:id="@+id/imgRecetaItem"
             android:layout_width="match_parent"
@@ -19,25 +22,55 @@
             android:scaleType="centerCrop"
             android:src="@drawable/receta1" />
 
-        <TextView
-            android:id="@+id/tvTituloItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Título de Receta"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp" />
+        <!-- Gradiente sobre la imagen -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/image_gradient" />
 
-        <TextView
-            android:id="@+id/tvDescItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Descripción o primer ingrediente..."
-            android:textSize="14sp"
-            android:textColor="@color/colorTextSecondary"
-            android:maxLines="1"
-            android:ellipsize="end"/>
+        <!-- Icono de favorito en la esquina superior derecha -->
+        <ImageView
+            android:id="@+id/imgFavorito"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/favorito_background"
+            android:padding="8dp"
+            android:src="@drawable/ic_favorite_border"
+            app:tint="@color/colorPrimary" />
 
-    </LinearLayout>
+        <!-- Contenido de texto -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgRecetaItem"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvTituloItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Título de Receta"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDescItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Código: R001"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

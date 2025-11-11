@@ -3,89 +3,114 @@ package com.example.recetario;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // ============ DECLARACIÓN DE VISTAS ============
     RecyclerView rvRecetas;
-    FloatingActionButton fabAgregar;
-    SearchView searchView; // Búsqueda unificada
-    LinearLayout layoutChipInfo; // Contenedor del chip informativo
-    TextView tvTipoBusqueda; // Texto que muestra el tipo de búsqueda
+    SearchView searchView;
+    LinearLayout layoutChipInfo, layoutBanner;
+    TextView tvTipoBusqueda, tvBannerTitle, tvBannerSubtitle;
+    BottomNavigationView bottomNavigationView;
 
-    // ============ VARIABLES DE LÓGICA ============
     DbHelper dbHelper;
-    List<Receta> listaRecetas; // Lista que almacena las recetas
-    RecetaAdapter adapter; // Adaptador para el RecyclerView
+    List<Receta> listaRecetas;
+    RecetaAdapter adapter;
 
-    // ============ MÉTODO onCreate ============
+    private int currentView = R.id.nav_home; // Vista actual (home por defecto)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Aplica el tema personalizado
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
 
-        // Inicializa el helper de base de datos
         dbHelper = new DbHelper(this);
         listaRecetas = new ArrayList<>();
 
-        // ============ ENLAZAR VISTAS CON EL LAYOUT ============
+        // Vincular vistas
         rvRecetas = findViewById(R.id.rvRecetas);
-        fabAgregar = findViewById(R.id.fabAgregar);
         searchView = findViewById(R.id.searchView);
         layoutChipInfo = findViewById(R.id.layoutChipInfo);
         tvTipoBusqueda = findViewById(R.id.tvTipoBusqueda);
+        layoutBanner = findViewById(R.id.layoutBanner);
+        tvBannerTitle = findViewById(R.id.tvBannerTitle);
+        tvBannerSubtitle = findViewById(R.id.tvBannerSubtitle);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        // ============ CONFIGURAR RECYCLERVIEW ============
-        // Establece el layout manager (lista vertical)
+        // Configurar RecyclerView
         rvRecetas.setLayoutManager(new LinearLayoutManager(this));
-        // Crea e inicializa el adaptador
-        adapter = new RecetaAdapter(this, listaRecetas);
+        adapter = new RecetaAdapter(this, listaRecetas, new RecetaAdapter.OnFavoritoClickListener() {
+            @Override
+            public void onFavoritoClick(Receta receta, int position) {
+                toggleFavorito(receta, position);
+            }
+        });
         rvRecetas.setAdapter(adapter);
 
-        // ============ CONFIGURAR LISTENERS ============
+        // Configurar Bottom Navigation
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
 
-        // Listener del FAB: Abre la actividad para agregar nueva receta
-        fabAgregar.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, AddEditActivity.class);
-            startActivity(i);
+                if (itemId == R.id.nav_home) {
+                    currentView = R.id.nav_home;
+                    searchView.setVisibility(View.VISIBLE);
+                    layoutBanner.setVisibility(View.VISIBLE);
+                    updateBanner("Mi Recetario", "Explora todas tus recetas favoritas");
+                    loadRecetas(null, false, false);
+                    return true;
+                } else if (itemId == R.id.nav_add) {
+                    Intent i = new Intent(MainActivity.this, AddEditActivity.class);
+                    startActivity(i);
+                    return true;
+                } else if (itemId == R.id.nav_favorites) {
+                    currentView = R.id.nav_favorites;
+                    searchView.setVisibility(View.GONE);
+                    layoutChipInfo.setVisibility(View.GONE);
+                    layoutBanner.setVisibility(View.VISIBLE);
+                    updateBanner("Mis Favoritos ❤️", "Tus recetas guardadas con amor");
+                    loadRecetas(null, false, true);
+                    return true;
+                } else if (itemId == R.id.nav_ia) {
+                    Intent i = new Intent(MainActivity.this, SugerenciaIAActivity.class);
+                    startActivity(i);
+                    return true;
+                }
+                return false;
+            }
         });
 
-        // ============ BÚSQUEDA INTELIGENTE UNIFICADA ============
-        // Listener que detecta cambios en el texto de búsqueda
+        // Búsqueda inteligente
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            // Método que se ejecuta al presionar Enter/Buscar
             @Override
             public boolean onQueryTextSubmit(String query) {
                 realizarBusqueda(query);
                 return true;
             }
 
-            // Método que se ejecuta cada vez que cambia el texto
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Si el campo está vacío, muestra todas las recetas
                 if (newText.isEmpty()) {
-                    layoutChipInfo.setVisibility(View.GONE); // Oculta el chip informativo
-                    loadRecetas(null, false); // Carga todas las recetas
+                    layoutChipInfo.setVisibility(View.GONE);
+                    loadRecetas(null, false, currentView == R.id.nav_favorites);
                 } else if (newText.length() >= 2) {
-                    // Búsqueda en tiempo real después de 2 caracteres
                     realizarBusqueda(newText);
                 }
                 return true;
@@ -93,107 +118,99 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // ============ MÉTODO onResume ============
-    // Se ejecuta cada vez que la actividad vuelve al primer plano
     @Override
     protected void onResume() {
         super.onResume();
-        // Recarga todas las recetas (útil después de agregar/editar/eliminar)
-        loadRecetas(null, false);
+        // Recargar según la vista actual
+        if (currentView == R.id.nav_favorites) {
+            loadRecetas(null, false, true);
+        } else {
+            loadRecetas(null, false, false);
+        }
     }
 
-    // ============ MÉTODO DE BÚSQUEDA INTELIGENTE ============
-    /**
-     * Determina automáticamente si la búsqueda es por código o por nombre
-     * Criterio: Si el texto contiene números o empieza con 'R', busca por código
-     *           De lo contrario, busca por nombre
-     */
+    private void updateBanner(String title, String subtitle) {
+        tvBannerTitle.setText(title);
+        tvBannerSubtitle.setText(subtitle);
+    }
+
     private void realizarBusqueda(String query) {
         if (query == null || query.trim().isEmpty()) {
-            loadRecetas(null, false);
+            loadRecetas(null, false, currentView == R.id.nav_favorites);
             layoutChipInfo.setVisibility(View.GONE);
             return;
         }
 
         String queryTrim = query.trim();
-        boolean esPorCodigo = false;
+        boolean esPorCodigo = queryTrim.matches(".*\\d.*") || queryTrim.toUpperCase().startsWith("R");
 
-        // ============ LÓGICA DE DETECCIÓN ============
-        // Detecta si es búsqueda por código basándose en patrones comunes
-        if (queryTrim.matches(".*\\d.*")) {
-            // Contiene números (ej: R001, 001, REC123)
-            esPorCodigo = true;
-        } else if (queryTrim.toUpperCase().startsWith("R")) {
-            // Empieza con R (ej: R, RC, REC)
-            esPorCodigo = true;
-        }
-
-        // ============ MOSTRAR INDICADOR VISUAL ============
-        // Muestra un chip indicando el tipo de búsqueda
         layoutChipInfo.setVisibility(View.VISIBLE);
         if (esPorCodigo) {
             tvTipoBusqueda.setText("🔍 Buscando por: Código");
-            loadRecetas(queryTrim.toUpperCase(), true); // Búsqueda por código (mayúsculas)
+            loadRecetas(queryTrim.toUpperCase(), true, false);
         } else {
             tvTipoBusqueda.setText("🔍 Buscando por: Nombre");
-            loadRecetas(queryTrim, false); // Búsqueda por nombre
+            loadRecetas(queryTrim, false, false);
         }
     }
 
-    // ============ MÉTODO PARA CARGAR RECETAS ============
-    /**
-     * Carga las recetas desde la base de datos
-     * @param query Término de búsqueda (null para cargar todas)
-     * @param porCodigo true si busca por código, false si busca por nombre
-     */
-    private void loadRecetas(String query, boolean porCodigo) {
-        // Limpia la lista actual
+    private void loadRecetas(String query, boolean porCodigo, boolean soloFavoritos) {
         listaRecetas.clear();
         Cursor cursor = null;
 
-        // ============ EJECUTAR CONSULTA SEGÚN EL TIPO ============
-        if (query == null || query.isEmpty()) {
-            // Sin filtro: trae todas las recetas
+        if (soloFavoritos) {
+            cursor = dbHelper.getFavoritasRecetas();
+        } else if (query == null || query.isEmpty()) {
             cursor = dbHelper.getAllRecetas();
         } else if (porCodigo) {
-            // Búsqueda por código
             cursor = dbHelper.getRecetaByCodigo(query);
         } else {
-            // Búsqueda por nombre
             cursor = dbHelper.getRecetaByNombre(query);
         }
 
-        // Valida que el cursor no sea nulo
         if (cursor == null) {
             Toast.makeText(this, "Error al consultar la base de datos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // ============ FEEDBACK AL USUARIO ============
-        // Muestra mensaje si no hay resultados en una búsqueda
         if (cursor.getCount() == 0 && query != null) {
-            Toast.makeText(this, "No se encontraron recetas con: " + query, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No se encontraron recetas", Toast.LENGTH_SHORT).show();
         }
 
-        // ============ PROCESAR RESULTADOS ============
-        // Recorre el cursor y crea objetos Receta
         if (cursor.moveToFirst()) {
             do {
+                int favoritoValue = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.COL_FAVORITO));
                 listaRecetas.add(new Receta(
                         cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.COL_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_CODIGO)),
                         cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_NOMBRE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_INGREDIENTES)),
                         cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_PROCESO)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_IMAGEN))
+                        cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.COL_IMAGEN)),
+                        favoritoValue == 1
                 ));
             } while (cursor.moveToNext());
         }
 
-        // Cierra el cursor para liberar recursos
         cursor.close();
-
-        // Notifica al adaptador que los datos han cambiado
         adapter.notifyDataSetChanged();
+    }
+
+    private void toggleFavorito(Receta receta, int position) {
+        boolean nuevoEstado = !receta.esFavorito();
+        boolean result = dbHelper.toggleFavorito(receta.getId(), nuevoEstado);
+
+        if (result) {
+            receta.setEsFavorito(nuevoEstado);
+            adapter.notifyItemChanged(position);
+
+            String mensaje = nuevoEstado ? "Agregado a favoritos ❤️" : "Removido de favoritos";
+            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+
+            // Si estamos en la vista de favoritos y se desmarcó, recargamos
+            if (currentView == R.id.nav_favorites && !nuevoEstado) {
+                loadRecetas(null, false, true);
+            }
+        }
     }
 }

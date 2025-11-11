@@ -1,149 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <!-- Barra superior -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/arrow_back"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Regresar"
-                app:tint="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Detalle de receta"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-
-        <!-- Contenido principal -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- Imagen -->
-            <ImageView
-                android:id="@+id/imgDetalle"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/receta1" />
-
-            <!-- Título y código -->
-            <TextView
-                android:id="@+id/tvTituloDetalle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Título de la receta"
-                android:textStyle="bold"
-                android:textSize="22sp"
-                android:paddingTop="8dp" />
-
-            <TextView
-                android:id="@+id/tvDescripcionDetalle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descripción breve"
-                android:textSize="16sp"
-                android:textColor="@color/colorTextSecondary" />
-
-            <!-- Sección Ingredientes con checkboxes -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ingredientes"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:paddingTop="16dp"
-                android:textColor="@color/colorPrimaryDark"/>
-
-            <LinearLayout
-                android:id="@+id/layoutIngredientesDetalle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:padding="8dp"/>
-
-            <!-- Sección Procedimiento con checkboxes -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Procedimiento"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:paddingTop="16dp"
-                android:textColor="@color/colorPrimaryDark"/>
-
-            <LinearLayout
-                android:id="@+id/layoutProcedimientoDetalle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="8dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:padding="8dp"/>
-
-            <!-- Botones de acción -->
+            <!-- Barra superior -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="24dp">
+                android:layout_height="56dp"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                android:gravity="center_vertical">
 
-                <Button
-                    android:id="@+id/btnEditar"
-                    style="@style/ButtonStyle"
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Regresar"
+                    android:src="@drawable/arrow_back"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Editar"
-                    android:layout_marginEnd="8dp"/>
-
-                <Button
-                    android:id="@+id/btnEliminar"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Eliminar"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:layout_marginStart="8dp"/>
-
+                    android:layout_marginStart="8dp"
+                    android:text="Detalle de receta"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnRegresar"
-                style="@style/ButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Regresar al menú"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
+            <!-- Imagen con overlay -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
 
+                <ImageView
+                    android:id="@+id/imgDetalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/receta1" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/image_gradient_strong" />
+            </RelativeLayout>
+
+            <!-- Contenido -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvTituloDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:text="Título de la receta"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescripcionDetalle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Código: R001"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="16sp" />
+
+                <!-- Ingredientes -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="🥬 Ingredientes"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:id="@+id/layoutIngredientesDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Procedimiento -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="📝 Procedimiento"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:id="@+id/layoutProcedimientoDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Botones -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnEditar"
+                        style="@style/ButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:text="✏️ Editar" />
+
+                    <Button
+                        android:id="@+id/btnEliminar"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="🗑️ Eliminar"
+                        android:textColor="@color/colorPrimaryDark" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnRegresar"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="80dp"
+                    android:text="← Regresar al menú"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <!-- FAB de favorito -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFavorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:layout_marginTop="230dp"
+        android:contentDescription="Agregar a favoritos"
+        android:src="@drawable/ic_favorite_border"
+        app:backgroundTint="@color/white"
+        app:tint="@color/colorPrimary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
