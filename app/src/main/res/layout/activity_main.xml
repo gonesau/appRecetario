@@ -10,112 +10,107 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Toolbar elegante -->
+        <!-- Toolbar minimalista sin elevación -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="4dp"
-            app:elevation="4dp">
-
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🍳 Mi Recetario"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <!-- Banner atractivo -->
-        <LinearLayout
-            android:id="@+id/layoutBanner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/banner_gradient"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:elevation="2dp">
-
-            <TextView
-                android:id="@+id/tvBannerTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mi Recetario"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvBannerSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Explora todas tus recetas favoritas"
-                android:textColor="#E0E0E0"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Card de búsqueda -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            app:elevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:iconifiedByDefault="false"
-                    app:iconifiedByDefault="false"
-                    app:queryHint="Buscar por código o nombre..."
-                    app:searchHintIcon="@null" />
-
+                <!-- Banner minimalista -->
                 <LinearLayout
-                    android:id="@+id/layoutChipInfo"
+                    android:id="@+id/layoutBanner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="12dp"
-                    android:visibility="gone">
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
 
                     <TextView
-                        android:id="@+id/tvTipoBusqueda"
+                        android:id="@+id/tvBannerTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🔍 Buscando por: Código"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="12sp"
-                        android:textStyle="italic" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                        android:text="Mi Recetario"
+                        android:textColor="@color/colorTextPrimary"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-medium"/>
 
-        <!-- Texto informativo -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="💡 Consejo: Usa códigos como R001 o busca por nombre"
-            android:textColor="@color/colorTextSecondary"
-            android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tvBannerSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Explora todas tus recetas favoritas"
+                        android:textColor="@color/colorTextSecondary"
+                        android:textSize="14sp"
+                        android:alpha="0.8"/>
+                </LinearLayout>
+
+                <!-- Búsqueda minimalista -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="#E0E0E0"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/searchView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:iconifiedByDefault="false"
+                            app:iconifiedByDefault="false"
+                            app:queryHint="Buscar recetas..."
+                            app:searchHintIcon="@null" />
+
+                        <!-- Chip de búsqueda -->
+                        <LinearLayout
+                            android:id="@+id/layoutChipInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:paddingBottom="12dp"
+                            android:visibility="gone">
+
+                            <View
+                                android:layout_width="6dp"
+                                android:layout_height="6dp"
+                                android:layout_marginEnd="8dp"
+                                android:background="@drawable/dot_indicator"/>
+
+                            <TextView
+                                android:id="@+id/tvTipoBusqueda"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Buscando por código"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="12sp"
+                                android:fontFamily="sans-serif-medium"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Lista de recetas -->
         <androidx.recyclerview.widget.RecyclerView
@@ -123,12 +118,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
+            android:paddingTop="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
             android:clipToPadding="false" />
     </LinearLayout>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation minimalista -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

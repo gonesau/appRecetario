@@ -18,11 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class SugerenciaIAActivity extends AppCompatActivity {
@@ -138,24 +138,45 @@ public class SugerenciaIAActivity extends AppCompatActivity {
     }
 
     private void cargarRecetasDesdeJSON() {
+        InputStream is = null;
         try {
-            InputStream is = getAssets().open("recetas_sugeridas.json");
+            is = getAssets().open("recetas_sugeridas.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
-            is.close();
 
-            String json = new String(buffer, "UTF-8");
+            String json = new String(buffer, StandardCharsets.UTF_8);
             recetasJSON = new JSONArray(json);
-        } catch (Exception e) {
+
+        } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error al cargar recetas predefinidas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al cargar archivo de recetas: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            // Crear un array vacío para evitar crashes
+            recetasJSON = new JSONArray();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al parsear JSON: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            recetasJSON = new JSONArray();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     private void generarSugerencia() {
         if (ingredientesSeleccionados.isEmpty()) {
             Toast.makeText(this, "Selecciona al menos un ingrediente", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Verificar que haya recetas cargadas
+        if (recetasJSON == null || recetasJSON.length() == 0) {
+            Toast.makeText(this, "No hay recetas disponibles. Verifica el archivo JSON.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -213,7 +234,7 @@ public class SugerenciaIAActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error al procesar recetas", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al procesar recetas: " + e.getMessage(), Toast.LENGTH_LONG).show();
             layoutCargando.setVisibility(View.GONE);
             layoutSeleccion.setVisibility(View.VISIBLE);
         }
@@ -263,7 +284,9 @@ public class SugerenciaIAActivity extends AppCompatActivity {
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error al mostrar resultado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al mostrar resultado: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            layoutCargando.setVisibility(View.GONE);
+            layoutSeleccion.setVisibility(View.VISIBLE);
         }
     }
 }

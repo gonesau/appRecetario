@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     searchView.setVisibility(View.GONE);
                     layoutChipInfo.setVisibility(View.GONE);
                     layoutBanner.setVisibility(View.VISIBLE);
-                    updateBanner("Mis Favoritos ❤️", "Tus recetas guardadas con amor");
+                    updateBanner("Favoritos", "Tus recetas guardadas con amor");
                     loadRecetas(null, false, true);
                     return true;
                 } else if (itemId == R.id.nav_ia) {
@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity {
 
         layoutChipInfo.setVisibility(View.VISIBLE);
         if (esPorCodigo) {
-            tvTipoBusqueda.setText("🔍 Buscando por: Código");
+            tvTipoBusqueda.setText("Buscando por código");
             loadRecetas(queryTrim.toUpperCase(), true, false);
         } else {
-            tvTipoBusqueda.setText("🔍 Buscando por: Nombre");
+            tvTipoBusqueda.setText("Buscando por nombre");
             loadRecetas(queryTrim, false, false);
         }
     }
